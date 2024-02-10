@@ -1,0 +1,29 @@
+﻿<Window x:Class="Piredda.Riccardo._4i.rubricaWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Piredda.Riccardo._4i.rubricaWPF"
+        mc:Ignorable="d"
+        Title="Rubrica" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Column="0" x:Name="GrigliaContatti" SelectionChanged="GrigliaContatti_SelectionChanged">
+            
+        </DataGrid>
+        <DataGrid x:Name="GrigliaPersone" Grid.Column="1" SelectionChanged="GrigliaPersone_SelectionChanged">
+            
+        </DataGrid>
+
+        <TextBlock x:Name="StatusBar" Grid.Row="1"></TextBlock>
+    </Grid>
+</Window>
