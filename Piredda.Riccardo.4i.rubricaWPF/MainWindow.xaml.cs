@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Collections.Generic;
 using System.Linq;
-using System.ComponentModel;
 
 namespace Piredda.Riccardo._4i.rubricaWPF
 {
@@ -15,13 +12,13 @@ namespace Piredda.Riccardo._4i.rubricaWPF
     public partial class MainWindow : Window
     {
 
-        private List<Contatto> _tutteLeInformazioni;
+        private Contatti _tuttiIContatti;
         private List<Contatto> _itemSourceContatti;
-        private List<Persona> _itemSourcePersone;
+        private Persone _itemSourcePersone;
 
 
         public List<Contatto> ItemSourceContatti { get => this._itemSourceContatti; }
-        public List<Persona> ItemSourcePersone { get => this._itemSourcePersone; }
+        public Persone ItemSourcePersone { get => this._itemSourcePersone; }
 
         public MainWindow()
         {
@@ -31,34 +28,16 @@ namespace Piredda.Riccardo._4i.rubricaWPF
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this._itemSourceContatti = new();
-            this._tutteLeInformazioni = new();
-            this._itemSourcePersone = new();
-            // Siccome l'apertura di un file può causare un eccezione per diversi motivi
+            // Siccome l'apertura di un file può causare un'eccezione per diversi motivi
             try
             {
-                using ( StreamReader sr = new( "Contatti.csv" ) )
-                {
-                    sr.ReadLine();
-                    string riga = string.Empty;
+                this._itemSourceContatti = new();
+            
                 
-                    while (!sr.EndOfStream)
-                        this._tutteLeInformazioni.Add(new Contatto(sr.ReadLine()));
-
-                    sr.Close();
-                }
-                StatusBar.Text = $"Trovati {this._tutteLeInformazioni.Count} contatti";
-
-                using ( StreamReader sr = new( "Persone.csv" ) )
-                {
-                    sr.ReadLine();
-                    string riga = string.Empty;
-
-                    while (!sr.EndOfStream)
-                        this._itemSourcePersone.Add(new Persona(sr.ReadLine()));
-
-                    sr.Close();
-                }
+                this._tuttiIContatti = new("Contatti.csv");
+                StatusBar.Text = $"Trovati {this._tuttiIContatti.Count} contatti";
+                
+                this._itemSourcePersone = new("Persone.csv");
                 StatusBar.Text = $"Trovati {StatusBar.Text} contatti e {this._itemSourcePersone.Count} persone";
 
             }
@@ -79,9 +58,46 @@ namespace Piredda.Riccardo._4i.rubricaWPF
         {
             this._itemSourceContatti.Clear();
             Persona p = e.AddedItems[0] as Persona;
-            this._itemSourceContatti = new List<Contatto>(this._tutteLeInformazioni.Where(t => t.PK == p.PK));
+            this._itemSourceContatti = new Contatti(this._tuttiIContatti.Where(t => t.IdPersona == p.PK));
 
             GrigliaContatti.ItemsSource = this.ItemSourceContatti;
         }
+    }
+
+    public class Persone : List<Persona>
+    {
+        public Persone(string PathPersone)
+        {
+
+            using (StreamReader sr = new(PathPersone))
+            {
+                sr.ReadLine();
+                string riga = string.Empty;
+
+                while (!sr.EndOfStream)
+                    this.Add(new Persona(sr.ReadLine()));
+
+                sr.Close();
+            }
+        }
+    }
+
+    public class Contatti : List<Contatto> 
+    {
+        public Contatti(string ContattiPath) : base()
+        {
+            using (StreamReader sr = new(ContattiPath))
+            {
+                sr.ReadLine();
+                string riga = string.Empty;
+
+                while (!sr.EndOfStream)
+                    this.Add(new Contatto(sr.ReadLine()));
+
+                sr.Close();
+            }
+        }
+        public Contatti(IEnumerable<Contatto> s) : base(s)
+        { }
     }
 }
