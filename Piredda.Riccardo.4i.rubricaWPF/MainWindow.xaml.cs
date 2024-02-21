@@ -35,10 +35,9 @@ namespace Piredda.Riccardo._4i.rubricaWPF
             
                 
                 this._tuttiIContatti = new("Contatti.csv");
-                StatusBar.Text = $"Trovati {this._tuttiIContatti.Count} contatti";
                 
                 this._itemSourcePersone = new("Persone.csv");
-                StatusBar.Text = $"Trovati {StatusBar.Text} contatti e {this._itemSourcePersone.Count} persone";
+                StatusBar.Text = $"Trovati {this._tuttiIContatti.Count} contatti e {this._itemSourcePersone.Count} persone";
 
             }
             catch (Exception ex)
