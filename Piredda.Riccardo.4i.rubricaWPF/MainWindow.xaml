@@ -17,10 +17,15 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DataGrid Grid.Column="0" x:Name="GrigliaContatti" SelectionChanged="GrigliaContatti_SelectionChanged">
+        <!-- NOTA BENE:
+                CanUserAddRows="False" serve per rimuovere la riga vuota.
+                SelectionMode="Single" serve per evitare problemi in caso si selezionino per sbaglio più contatti.
+        -->
+        <DataGrid CanUserAddRows="False" Grid.Column="0" x:Name="GrigliaPersone" SelectionMode="Single" SelectionChanged="GrigliaPersone_SelectionChanged">
             
         </DataGrid>
-        <DataGrid x:Name="GrigliaPersone" Grid.Column="1" SelectionChanged="GrigliaPersone_SelectionChanged">
+        <TextBlock HorizontalAlignment="Center" Margin="25" Grid.Column="1">Nessun Contatto</TextBlock>
+        <DataGrid Background="Transparent" CanUserAddRows="False" x:Name="GrigliaContatti" Grid.Column="1" SelectionMode="Single" SelectionChanged="GrigliaContatti_SelectionChanged">
             
         </DataGrid>
 

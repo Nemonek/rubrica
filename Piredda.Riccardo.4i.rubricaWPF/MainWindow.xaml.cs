@@ -92,7 +92,7 @@ namespace Piredda.Riccardo._4i.rubricaWPF
                 string riga = string.Empty;
 
                 while (!sr.EndOfStream)
-                    this.Add(new Contatto(sr.ReadLine()));
+                    this.Add(Contatto.CreaEreditante(sr.ReadLine()));
 
                 sr.Close();
             }
